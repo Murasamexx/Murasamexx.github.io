@@ -1,0 +1,36 @@
+            h1
+            {
+                color: red;
+                text-align: center;
+            }
+            h2
+            {
+                margin-left: 60%;
+                color: white;
+            }
+            p
+            {
+                color: red;
+                text-indent: 32px;
+                font-size: 16px;
+                line-height: 32px;
+            }
+            a
+            {
+                color: yellow;
+                background: black;
+            }
+            body
+            {
+                background-image: url(../img/sd.png);
+            }
+            img
+            {
+                position: absolute;
+                left: 50%;
+                margin-left: -101px;
+            }
+            span
+            {
+                color: green;
+            }
