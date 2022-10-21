@@ -1,101 +1,107 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>第一个程序</title>
-        <link rel="stylesheet" type="text/css" href="./1.01/styles.css">
-        <link rel="stylesheet" type="text/css" media="print" href="./1.01/print.css">
-        <link rel="stylesheet" type="text/css" media="screen and (min-width:512px) and (max-width:1024px)" href="./1.01/screen512to1024.css">
-        <link rel="icon" type="image/x-icon" href="./img/cricle.ico">
-        <base href="http://baidu.com" target="_blank">
-        <script type="text/javascript">document.write("My name is Murasame")</script>
-        <script type="text/javascript" src="./1.01/hi.js"></script>
-        <!-- 虽然没有提示，但还是成功了  -->
-        <!-- <style>
-            h1
-            {
-                color: red;
-                text-align: center;
-            }
-            h2
-            {
-                margin-left: 60%;
-                color: white;
-            }
-            p
-            {
-                color: red;
-                text-indent: 32px;
-                font-size: 16px;
-                line-height: 32px;
-            }
-            a
-            {
-                color: yellow;
-                background: black;
-            }
-            body
-            {
-                background-image: url(./img/sd.png);
-            }
-            img
-            {
-                position: absolute;
-                left: 50%;
-                margin-left: -101px;
-            }
-        </style> -->
-        <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | WebGL测试</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+  </head>
+  <body>
+    <div id="unity-container" class="unity-desktop">
+      <canvas id="unity-canvas" width=960 height=600></canvas>
+      <div id="unity-loading-bar">
+        <div id="unity-logo"></div>
+        <div id="unity-progress-bar-empty">
+          <div id="unity-progress-bar-full"></div>
+        </div>
+      </div>
+      <div id="unity-warning"> </div>
+      <div id="unity-footer">
+        <div id="unity-webgl-logo"></div>
+        <div id="unity-fullscreen-button"></div>
+        <div id="unity-build-title">WebGL测试</div>
+      </div>
+    </div>
+    <script>
+      var container = document.querySelector("#unity-container");
+      var canvas = document.querySelector("#unity-canvas");
+      var loadingBar = document.querySelector("#unity-loading-bar");
+      var progressBarFull = document.querySelector("#unity-progress-bar-full");
+      var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+      var warningBanner = document.querySelector("#unity-warning");
 
-        <!-- <style media="print">
-            h1
-            {
-                color: black;
-            }
-            h2
-            {
-                color: black;
-            }
-            p
-            {
-                color: black;
-            }
-        </style> -->
+      // Shows a temporary message banner/ribbon for a few seconds, or
+      // a permanent error message on top of the canvas if type=='error'.
+      // If type=='warning', a yellow highlight color is used.
+      // Modify or remove this function to customize the visually presented
+      // way that non-critical warnings and error messages are presented to the
+      // user.
+      function unityShowBanner(msg, type) {
+        function updateBannerVisibility() {
+          warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
+        }
+        var div = document.createElement('div');
+        div.innerHTML = msg;
+        warningBanner.appendChild(div);
+        if (type == 'error') div.style = 'background: red; padding: 10px;';
+        else {
+          if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
+          setTimeout(function() {
+            warningBanner.removeChild(div);
+            updateBannerVisibility();
+          }, 5000);
+        }
+        updateBannerVisibility();
+      }
 
-        <!-- <style media="screen and (min-width:512px) and (max-width:1024px)">
-            body
-            {
-                background-image: url(./img/2022.7.16.png);
-            }
-        </style> -->
-    </head>
-    <body>
-        <h1>Hello world</h1>
-        <h2>Murasamexx</h2>
-        <!-- <img src="img/sd.png" width="1920px" height="1080px"> -->
-        <a href="http://www.baidu.com" target="_blank">看看百度</a>
-        <p>Murasame</p>
-        <p>
-        m的还是翻车了cad又不及格
-        wrap mode换行模式
-        “迄今所有人生都大写着失败，但不妨碍我继续向前”
-        给你机会你得把握住是不是
-        改天去电脑城换个键盘试试吧，手感和音量是相当关键的部分，也重在尝试吧
-        Generator发生器
-        “UGUI”
-        还得学习unity各种插件的使用
-        还有很多事要做呢，哪有时间休息啊我焯
-        还有一大堆的事情等着去做呢，还有一大堆的书要看，还有一大堆的东西要学，还有很多地方没有去，还有很多人没有见
-        detect探测
-        detected探测到
-        修炼时间你觉得是用来给你懈怠的吗，啊？
-        难得争取而来的修炼时间兄弟
-        spring弹簧春天
-        <br>joint联合<br>
-        spring joint弹簧接头
-        magnitude大小我直接转一手<span>大小</span>.magnitude相当于是获取长度了属于是
-        现在的问题就是<span>代码量太大</span>，没有用过任何插件简化代码，如果每个游戏都写这么长的代码那谁能受得了？
-        “迄今所有人生都大写着失败，但不妨碍我继续向前”
-        </p>
-    </body>
+      var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/test9.loader.js";
+      var config = {
+        dataUrl: buildUrl + "/test9.data.br",
+        frameworkUrl: buildUrl + "/test9.framework.js.br",
+        codeUrl: buildUrl + "/test9.wasm.br",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "WebGL测试",
+        productVersion: "1.0",
+        showBanner: unityShowBanner,
+      };
+
+      // By default Unity keeps WebGL canvas render target size matched with
+      // the DOM size of the canvas element (scaled by window.devicePixelRatio)
+      // Set this to false if you want to decouple this synchronization from
+      // happening inside the engine, and you would instead like to size up
+      // the canvas DOM size and WebGL render target sizes yourself.
+      // config.matchWebGLToCanvasSize = false;
+
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        container.className = "unity-mobile";
+        // Avoid draining fillrate performance on mobile devices,
+        // and default/override low DPI mode on mobile browsers.
+        config.devicePixelRatio = 1;
+        unityShowBanner('WebGL builds are not supported on mobile devices.');
+      } else {
+        canvas.style.width = "960px";
+        canvas.style.height = "600px";
+      }
+      loadingBar.style.display = "block";
+
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          progressBarFull.style.width = 100 * progress + "%";
+        }).then((unityInstance) => {
+          loadingBar.style.display = "none";
+          fullscreenButton.onclick = () => {
+            unityInstance.SetFullscreen(1);
+          };
+        }).catch((message) => {
+          alert(message);
+        });
+      };
+      document.body.appendChild(script);
+    </script>
+  </body>
 </html>
