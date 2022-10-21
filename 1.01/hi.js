@@ -1,0 +1,1 @@
+document.write("Life was like a box of chocalates");
